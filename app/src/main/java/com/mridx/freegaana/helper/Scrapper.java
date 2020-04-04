@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 
 import com.mridx.freegaana.dataholder.Song;
 import com.mridx.freegaana.dataholder.SongData;
+import com.mridx.freegaana.dataholder.TopChart;
 
 import org.jsoup.Jsoup;
 
@@ -17,14 +18,18 @@ import java.util.ArrayList;
 public class Scrapper {
 
     private Context context;
+    public static int TRENDING = 0, NEW_RELEASE = 1, TOP_CHARTS = 2, PLAYLIST = 3;
 
     public Scrapper(Context context) {
         this.context = context;
     }
 
     OnScrappingComplete onScrappingComplete;
+
+
+
     public interface OnScrappingComplete {
-        void setOnScrappingComplete(ArrayList<SongData> songData, int dataType);
+        void setOnScrappingComplete(ArrayList<SongData> songData, ArrayList<TopChart> topCharts, ArrayList<Song> playlistSongs, int dataType);
     }
     public void setOnScrappingComplete(OnScrappingComplete onScrappingComplete) {
         this.onScrappingComplete = onScrappingComplete;
@@ -40,37 +45,6 @@ public class Scrapper {
 
 
 
-    OnTrendingCompleteListener onTrendingCompleteListener;
-    public interface OnTrendingCompleteListener {
-        void setOnTrendingCompleteListener(ArrayList<SongData> trendingSongs);
-    }
-    public void setOnTrendingCompleteListener(OnTrendingCompleteListener onTrendingCompleteListener) {
-        this.onTrendingCompleteListener = onTrendingCompleteListener;
-    }
-
-    OnNewReleaseCompleteListener onNewReleaseCompleteListener;
-    public interface OnNewReleaseCompleteListener {
-        void setOnNewReleaseCompleteListener(ArrayList<SongData> newReleaseSongs);
-    }
-    public void setOnNewReleaseCompleteListener(OnNewReleaseCompleteListener onNewReleaseCompleteListener) {
-        this.onNewReleaseCompleteListener = onNewReleaseCompleteListener;
-    }
-
-    public void scrapTrending() {
-        Trending trending = new Trending(context);
-        trending.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        trending.setOnComplete(new Trending.OnComplete() {
-            @Override
-            public void setOnCompletedListener(ArrayList<SongData> songData) {
-                onScrappingComplete.setOnScrappingComplete(songData, 0);
-            }
-        });
-    }
-
-    public void scrapSong(String songUrl) {
-
-    }
-
     public void scrapSong(String songUrl, String albumId) {
         SongScrapper songScrapper = new SongScrapper(context, songUrl, albumId);
         songScrapper.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -80,8 +54,15 @@ public class Scrapper {
     public void scrapHomepage() {
         ScrapHomePage scrapHomePage = new ScrapHomePage(context);
         scrapHomePage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        scrapHomePage.setOnTrendingCompleteListener(trendingSongs -> onScrappingComplete.setOnScrappingComplete(trendingSongs, 0) );
-        scrapHomePage.setOnNewReleaseCompleteListener(newReleaseSongs -> onScrappingComplete.setOnScrappingComplete(newReleaseSongs, 1));
+        scrapHomePage.setOnTrendingCompleteListener(trendingSongs -> onScrappingComplete.setOnScrappingComplete(trendingSongs, null, null,  TRENDING) );
+        scrapHomePage.setOnNewReleaseCompleteListener(newReleaseSongs -> onScrappingComplete.setOnScrappingComplete(newReleaseSongs, null, null, NEW_RELEASE));
+        scrapHomePage.setOnTopChartCompleteListener(topChartSongs -> onScrappingComplete.setOnScrappingComplete(null, topChartSongs, null,  TOP_CHARTS));
+    }
+
+    public void scrapAlbum(String url) {
+        ScrapPlaylist scrapPlaylist = new ScrapPlaylist(context, url);
+        scrapPlaylist.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        scrapPlaylist.setOnPlaylistScrapingComplete(songsList -> onScrappingComplete.setOnScrappingComplete(null, null, songsList,  PLAYLIST));
     }
 
 

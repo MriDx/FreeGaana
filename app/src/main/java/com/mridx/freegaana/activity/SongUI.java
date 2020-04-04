@@ -14,24 +14,34 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mridx.freegaana.R;
+import com.mridx.freegaana.dataholder.Song;
 import com.mridx.freegaana.dataholder.SongData;
 import com.mridx.freegaana.helper.SongHelper;
 
 public class SongUI extends AppCompatActivity {
 
+    public static int FROM_SONG = 0, FROM_PLAYLIST = 1;
+
     public SongData songData;
+    public Song song;
     public AppCompatImageView thumbnailView;
     public AppCompatTextView songNameView, albumNameView, artistsNameView;
     private SongHelper helper;
     public FloatingActionButton songDownload;
     public ConstraintLayout floatingBtnMask, parentView;
+    public int layout_code = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.song_ui);
 
-        songData = (SongData) getIntent().getSerializableExtra("SONG");
+        layout_code = getIntent().getExtras().getInt("LAYOUT_CODE");
+        if ( layout_code == FROM_SONG) {
+            songData = (SongData) getIntent().getSerializableExtra("SONG");
+        } else {
+            song = (Song) getIntent().getSerializableExtra("SONG");
+        }
 
         findView();
         helper = new SongHelper(this);

@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.MyFullScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar" >
+    <style name="AppTheme.MyFullScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -16,8 +16,17 @@
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
-    <style name="AppTheme.WhiteProgressbar" parent="Widget.AppCompat.ProgressBar" >
+    <style name="AppTheme.WhiteProgressbar" parent="Widget.AppCompat.ProgressBar">
         <item name="colorAccent">@color/white</item>
     </style>
+
+    <style name="AppTheme.MyFullScreen.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.MyFullScreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.MyFullScreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

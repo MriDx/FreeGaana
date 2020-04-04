@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.mridx.freegaana.dataholder.Links;
 import com.mridx.freegaana.dataholder.SongData;
+import com.mridx.freegaana.dataholder.TopChart;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class ScrapHomePage extends AsyncTask<Void, Void, String> {
     private Context context;
     private ArrayList<SongData> trendingSongs = new ArrayList<>();
     private ArrayList<SongData> newReleaseSongs = new ArrayList<>();
-    private ArrayList<SongData> topPicks = new ArrayList<>();
+    private ArrayList<TopChart> topChartsSongs = new ArrayList<>();
 
     public ScrapHomePage(Context context) {
         this.context = context;
@@ -50,6 +51,14 @@ public class ScrapHomePage extends AsyncTask<Void, Void, String> {
         this.onNewReleaseCompleteListener = onNewReleaseCompleteListener;
     }
 
+    OnTopChartCompleteListener onTopChartCompleteListener;
+    public interface OnTopChartCompleteListener {
+        void setOnTopChartCompleteListener(ArrayList<TopChart> topChartSongs);
+    }
+    public void setOnTopChartCompleteListener(OnTopChartCompleteListener onTopChartCompleteListener) {
+        this.onTopChartCompleteListener = onTopChartCompleteListener;
+    }
+
     @Override
     protected String doInBackground(Void... voids) {
         Connection connection = Jsoup.connect(Links.HOMEPAGE_URL);
@@ -57,6 +66,7 @@ public class ScrapHomePage extends AsyncTask<Void, Void, String> {
             Document document = connection.get();
             Element trendingNode = document.select("#trendingsong").first();
             Element newReleaseNode = document.select("#newrelease").first();
+            Element topChartsNode = document.select("#topchartsCarousel").first();
 
             //for trending songs
             Elements songsArray = trendingNode.select("#new-release-album").select(".sourcelist_trending");
@@ -89,8 +99,24 @@ public class ScrapHomePage extends AsyncTask<Void, Void, String> {
             }
             //onNewReleaseCompleteListener.setOnNewReleaseCompleteListener(newReleaseSongs);
 
+            //for top charts
+            Elements topChartsArray = topChartsNode.select("span");
+            for (int i = 0; i < topChartsArray.size(); i++) {
+                if (i % 2 == 0) {
+                    JSONObject object = new JSONObject(topChartsArray.get(i).text());
+                    TopChart topChart = new TopChart(
+                            object.getString("id"),
+                            object.getString("title"),
+                            object.getString("share_url"),
+                            object.getString("albumartwork")
+                    );
+                    topChartsSongs.add(topChart);
+                }
+            }
+
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+            Log.d("kaku", "doInBackground: " + e);
             return null;
         }
         return "success";
@@ -101,6 +127,7 @@ public class ScrapHomePage extends AsyncTask<Void, Void, String> {
         super.onPostExecute(s);
         onTrendingCompleteListener.setOnTrendingCompleteListener(trendingSongs);
         onNewReleaseCompleteListener.setOnNewReleaseCompleteListener(newReleaseSongs);
+        onTopChartCompleteListener.setOnTopChartCompleteListener(topChartsSongs);
     }
 
     private String formatArtist(String data) {

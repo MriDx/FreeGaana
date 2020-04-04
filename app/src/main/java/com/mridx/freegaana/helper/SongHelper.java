@@ -6,12 +6,10 @@ package com.mridx.freegaana.helper;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -37,12 +35,16 @@ public class SongHelper {
 
     public void start() {
         populateViews();
-        scrapSong(songUI.songData.getSongUrl());
+        if (songUI.layout_code == 0) {
+            scrapSong(songUI.songData.getSongUrl(), songUI.songData.getAlbumId());
+            return;
+        }
+        scrapSong(songUI.song.getSongUrl(), songUI.song.getAlbumId());
     }
 
-    private void scrapSong(String songUrl) {
+    private void scrapSong(String songUrl, String albumId) {
         scrapper = new Scrapper(context);
-        scrapper.scrapSong(songUrl, songUI.songData.getAlbumId());
+        scrapper.scrapSong(songUrl, albumId);
         scrapper.setOnSongScrapingComplete(song -> {
             this.song = song;
             showDownload();
@@ -52,10 +54,10 @@ public class SongHelper {
     }
 
     private void showOthers(Song song) {
-        if (songUI.songData.getAlbumName().toLowerCase().equalsIgnoreCase("null") || songUI.songData.getAlbumName().length() == 0) {
+        if (songUI.albumNameView.getText().toString().length() == 0 || songUI.albumNameView.getText().toString().toLowerCase().equalsIgnoreCase("null")) {
             songUI.albumNameView.setText(song.getAlbumTitle());
         }
-        if (songUI.songData.getArtistDetails().toLowerCase().equalsIgnoreCase("null") || songUI.songData.getArtistDetails().length() == 0) {
+        if (songUI.artistsNameView.getText().toString().length() == 0 || songUI.artistsNameView.getText().toString().toLowerCase().equalsIgnoreCase("null")) {
             songUI.artistsNameView.setText(song.getArtists());
         }
     }
@@ -66,11 +68,11 @@ public class SongHelper {
     }
 
     private void populateViews() {
-        songUI.songNameView.setText(songUI.songData.getSongName());
-        songUI.albumNameView.setText(songUI.songData.getAlbumName());
-        songUI.artistsNameView.setText(songUI.songData.getArtistDetails());
+        songUI.songNameView.setText(songUI.layout_code == 0 ? songUI.songData.getSongName() : songUI.song.getSongName());
+        songUI.albumNameView.setText(songUI.layout_code == 0 ? songUI.songData.getAlbumName() : songUI.song.getAlbumTitle());
+        songUI.artistsNameView.setText(songUI.layout_code == 0 ? songUI.songData.getArtistDetails() : songUI.song.getArtists());
         Picasso.get()
-                .load(getHDThumbnail(songUI.songData.getThumbnail()))
+                .load(getHDThumbnail(songUI.layout_code == 0 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
                 .into(songUI.thumbnailView);
         songUI.songDownload.setOnClickListener(v -> handleDownloadClick());
     }
@@ -96,15 +98,18 @@ public class SongHelper {
         AppCompatTextView downloadOk = downloadAlert.findViewById(R.id.downloadOk);
         downloadOk.setOnClickListener(v -> downloadAlert.dismiss());
 
+        String media = null;
         if (type == HIGH) {
-            String media = generateURL(song.getHighData());
-            downloader = new GaanaDownloader();
-            downloader.startDownload(context, media, songUI.songData.getSongName());
+            media = generateURL(song.getHighData());
+            /*downloader = new GaanaDownloader();
+            downloader.startDownload(context, media, songUI.songData.getSongName());*/
         } else {
-            String media = generateURL(song.getLowData());
-            downloader = new GaanaDownloader();
-            downloader.startDownload(context, media, songUI.songData.getSongName());
+            media = generateURL(song.getLowData());
+            /*downloader = new GaanaDownloader();
+            downloader.startDownload(context, media, songUI.songData.getSongName());*/
         }
+        downloader = new GaanaDownloader();
+        downloader.startDownload(context, media, songUI.layout_code == 0 ? songUI.songData.getSongName() : songUI.song.getSongName());
 
         downloader.setOnGetMaxDuration(duration -> {
             downloadIndicator.setMax(Integer.parseInt(String.valueOf(duration).split("\\.")[0]));
@@ -151,4 +156,6 @@ public class SongHelper {
         //data[7] = data[7].split("_")[0] + "_480x480_" + data[7].split("_")[2];
         return TextUtils.join("/", data);
     }
+
+
 }

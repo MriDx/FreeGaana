@@ -43,7 +43,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
 
     public void setSongDataList(ArrayList<SongData> songDataList) {
         this.songDataList = songDataList;
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mridx.freegaana.activity.MainUI;
 import com.mridx.freegaana.adapter.SongsAdapter;
+import com.mridx.freegaana.adapter.TopChartsAdapter;
 import com.mridx.freegaana.dataholder.SongData;
+import com.mridx.freegaana.dataholder.TopChart;
 
 import java.util.ArrayList;
 
@@ -19,10 +21,11 @@ public class MainUIHelper {
 
     private Context context;
     private MainUI mainUI;
-    private SongsAdapter trendingAdapter, newReleaseAdapter, topChartsAdapter;
+    private SongsAdapter trendingAdapter, newReleaseAdapter;
+    private TopChartsAdapter topChartsAdapter;
     private ArrayList<SongData> trendingSongs = new ArrayList<>();
     private ArrayList<SongData> newReleaseSongs = new ArrayList<>();
-    private ArrayList<SongData> topChartsSongs = new ArrayList<>();
+    private ArrayList<TopChart> topChartsSongs = new ArrayList<>();
     private GridLayoutManager trendingLayoutManager, newReleaseLayoutManager, topChartsLayoutManager;
     private static int TRENDING = 0, NEW_RELEASE = 1, TOP_CHARTS = 2;
 
@@ -49,7 +52,7 @@ public class MainUIHelper {
         mainUI.newReleaseHolder.setAdapter(newReleaseAdapter);
         //newReleaseAdapter.notifyDataSetChanged();
 
-        topChartsAdapter = new SongsAdapter(context, topChartsSongs, 1);
+        topChartsAdapter = new TopChartsAdapter(context, topChartsSongs);
         topChartsLayoutManager = new GridLayoutManager(context, 1);
         topChartsLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         mainUI.topChartsHolder.setLayoutManager(topChartsLayoutManager);
@@ -61,11 +64,13 @@ public class MainUIHelper {
     private void startScrapping() {
         Scrapper scrapper = new Scrapper(context);
         scrapper.scrapHomepage();
-        scrapper.setOnScrappingComplete((songData, dataType) -> {
+        scrapper.setOnScrappingComplete((songData, topCharts, playlistSongs,  dataType) -> {
             if (dataType == TRENDING) {
                 setTrendingSongs(songData);
             } else if (dataType == NEW_RELEASE) {
                 setNewReleaseSongs(songData);
+            } else if (dataType == TOP_CHARTS) {
+                setTopChartsSongs(topCharts);
             }
         });
     }
@@ -92,17 +97,18 @@ public class MainUIHelper {
     public void setTrendingSongs(ArrayList<SongData> trendingSongs) {
         //this.trendingSongs = trendingSongs;
         trendingAdapter.setSongDataList(trendingSongs);
-        trendingAdapter.notifyDataSetChanged();
+        //trendingAdapter.notifyDataSetChanged();
     }
     public void setNewReleaseSongs(ArrayList<SongData> newReleaseSongs) {
         //this.newReleaseSongs = newReleaseSongs;
         //newReleaseAdapter.notifyDataSetChanged();
         newReleaseAdapter.setSongDataList(newReleaseSongs);
-        newReleaseAdapter.notifyDataSetChanged();
+        //newReleaseAdapter.notifyDataSetChanged();
     }
-    public void setTopChartsSongs(ArrayList<SongData> topChartsSongs) {
-        this.topChartsSongs = topChartsSongs;
-        topChartsAdapter.notifyDataSetChanged();
+    public void setTopChartsSongs(ArrayList<TopChart> topChartsSongs) {
+        //this.topChartsSongs = topChartsSongs;
+        topChartsAdapter.setSongDataList(topChartsSongs);
+        //topChartsAdapter.notifyDataSetChanged();
     }
 
 
