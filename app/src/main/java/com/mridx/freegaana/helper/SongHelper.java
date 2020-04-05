@@ -19,6 +19,9 @@ import com.mridx.freegaana.activity.SongUI;
 import com.mridx.freegaana.dataholder.Song;
 import com.squareup.picasso.Picasso;
 
+import static com.mridx.freegaana.activity.SongUI.FROM_SEARCH;
+import static com.mridx.freegaana.activity.SongUI.FROM_SONG;
+
 public class SongHelper {
 
     private Context context;
@@ -35,8 +38,11 @@ public class SongHelper {
 
     public void start() {
         populateViews();
-        if (songUI.layout_code == 0) {
+        if (songUI.layout_code == FROM_SONG) {
             scrapSong(songUI.songData.getSongUrl(), songUI.songData.getAlbumId());
+            return;
+        } else if (songUI.layout_code == FROM_SEARCH) {
+            scrapSong(songUI.songData.getSongUrl(), songUI.songData.getAlbumId(), songUI.layout_code);
             return;
         }
         scrapSong(songUI.song.getSongUrl(), songUI.song.getAlbumId());
@@ -50,7 +56,16 @@ public class SongHelper {
             showDownload();
             showOthers(song);
         });
+    }
 
+    private void scrapSong(String songUrl, String albumId, int code) {
+        scrapper = new Scrapper(context);
+        scrapper.scrapSong(songUrl, albumId, code);
+        scrapper.setOnSongScrapingComplete(song -> {
+            this.song = song;
+            showDownload();
+            showOthers(song);
+        });
     }
 
     private void showOthers(Song song) {
@@ -68,11 +83,11 @@ public class SongHelper {
     }
 
     private void populateViews() {
-        songUI.songNameView.setText(songUI.layout_code == 0 ? songUI.songData.getSongName() : songUI.song.getSongName());
-        songUI.albumNameView.setText(songUI.layout_code == 0 ? songUI.songData.getAlbumName() : songUI.song.getAlbumTitle());
-        songUI.artistsNameView.setText(songUI.layout_code == 0 ? songUI.songData.getArtistDetails() : songUI.song.getArtists());
+        songUI.songNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getSongName() : songUI.song.getSongName());
+        songUI.albumNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getAlbumName() : songUI.song.getAlbumTitle());
+        songUI.artistsNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getArtistDetails() : songUI.song.getArtists());
         Picasso.get()
-                .load(getHDThumbnail(songUI.layout_code == 0 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
+                .load(getHDThumbnail(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
                 .into(songUI.thumbnailView);
         songUI.songDownload.setOnClickListener(v -> handleDownloadClick());
     }
@@ -109,7 +124,7 @@ public class SongHelper {
             downloader.startDownload(context, media, songUI.songData.getSongName());*/
         }
         downloader = new GaanaDownloader();
-        downloader.startDownload(context, media, songUI.layout_code == 0 ? songUI.songData.getSongName() : songUI.song.getSongName());
+        downloader.startDownload(context, media, songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getSongName() : songUI.song.getSongName());
 
         downloader.setOnGetMaxDuration(duration -> {
             downloadIndicator.setMax(Integer.parseInt(String.valueOf(duration).split("\\.")[0]));

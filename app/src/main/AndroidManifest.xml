@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".activity.SongUI" />
         <activity android:name=".activity.PlaylistUI" />
+        <activity android:name=".activity.SearchUI" />
     </application>
 
 </manifest>

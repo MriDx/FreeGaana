@@ -12,12 +12,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0"
+        android:theme="@style/AppTheme.MyFullScreen"
         >
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar"
             app:title="@string/app_name"
+            android:theme="@style/AppTheme.MyFullScreen"
+            app:titleTextColor="@color/white"
             />
     </com.google.android.material.appbar.AppBarLayout>
 

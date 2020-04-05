@@ -20,7 +20,7 @@ import com.mridx.freegaana.helper.SongHelper;
 
 public class SongUI extends AppCompatActivity {
 
-    public static int FROM_SONG = 0, FROM_PLAYLIST = 1;
+    public static int FROM_SONG = 0, FROM_PLAYLIST = 1, FROM_SEARCH = 2;
 
     public SongData songData;
     public Song song;
@@ -37,9 +37,11 @@ public class SongUI extends AppCompatActivity {
         setContentView(R.layout.song_ui);
 
         layout_code = getIntent().getExtras().getInt("LAYOUT_CODE");
-        if ( layout_code == FROM_SONG) {
+        if (layout_code == FROM_SONG || layout_code == FROM_SEARCH) {
             songData = (SongData) getIntent().getSerializableExtra("SONG");
-        } else {
+        } /*else if (layout_code == FROM_SEARCH) {
+            songData = (SongData) getIntent().getSerializableExtra("SONG");
+        } */ else {
             song = (Song) getIntent().getSerializableExtra("SONG");
         }
 

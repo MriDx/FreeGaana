@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class Scrapper {
 
     private Context context;
-    public static int TRENDING = 0, NEW_RELEASE = 1, TOP_CHARTS = 2, PLAYLIST = 3;
+    public static int TRENDING = 0, NEW_RELEASE = 1, TOP_CHARTS = 2, PLAYLIST = 3, SEARCH_SONGS = 4;
 
     public Scrapper(Context context) {
         this.context = context;
@@ -51,6 +51,12 @@ public class Scrapper {
         songScrapper.setOnSongScrapingComplete(song -> onSongScrapingComplete.setOnSongScrapingComplete(song));
     }
 
+    public void scrapSong(String songUrl, String albumId, int layout_code) {
+        SongScrapper songScrapper = new SongScrapper(context, songUrl, albumId, layout_code);
+        songScrapper.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        songScrapper.setOnSongScrapingComplete(song -> onSongScrapingComplete.setOnSongScrapingComplete(song));
+    }
+
     public void scrapHomepage() {
         ScrapHomePage scrapHomePage = new ScrapHomePage(context);
         scrapHomePage.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -63,6 +69,12 @@ public class Scrapper {
         ScrapPlaylist scrapPlaylist = new ScrapPlaylist(context, url);
         scrapPlaylist.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         scrapPlaylist.setOnPlaylistScrapingComplete(songsList -> onScrappingComplete.setOnScrappingComplete(null, null, songsList,  PLAYLIST));
+    }
+
+    public void scrapSearch(String query) {
+        ScrapSearch scrapSearch = new ScrapSearch(context, query);
+        scrapSearch.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        scrapSearch.setOnSearchScrapingComplete(songData -> onScrappingComplete.setOnScrappingComplete(songData, null, null, SEARCH_SONGS));
     }
 
 

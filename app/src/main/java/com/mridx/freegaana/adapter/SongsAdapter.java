@@ -4,6 +4,7 @@
 
 package com.mridx.freegaana.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mridx.freegaana.R;
 import com.mridx.freegaana.activity.MainUI;
+import com.mridx.freegaana.activity.SearchUI;
 import com.mridx.freegaana.dataholder.SongData;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -85,6 +87,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MyViewHolder
         }
     }
     private void handleSongClick(int adapterPosition) {
-        ((MainUI)context).handleClick(songDataList.get(adapterPosition));
+        if (context instanceof MainUI) {
+            ((MainUI) context).handleClick(songDataList.get(adapterPosition));
+        } else if (context instanceof SearchUI) {
+            ((SearchUI)context).handleClick(songDataList.get(adapterPosition));
+        }
     }
 }

@@ -21,6 +21,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class SongScrapper extends AsyncTask<Void, Void, String> {
     private Context context;
     private String songUrl;
     private String albumId;
+    private int FROM_SEARCH = 0;
 
     private Song song;
 
@@ -48,6 +50,14 @@ public class SongScrapper extends AsyncTask<Void, Void, String> {
         this.songUrl = songUrl;
         this.albumId = albumId;
     }
+
+    public SongScrapper(Context context, String songUrl, String albumId, int FROM_SEARCH) {
+        this.context = context;
+        this.songUrl = songUrl;
+        this.albumId = albumId;
+        this.FROM_SEARCH = FROM_SEARCH;
+    }
+
     OnSongScrapingComplete onSongScrapingComplete;
     public interface OnSongScrapingComplete {
         void setOnSongScrapingCompleteListener(Song song);
@@ -60,7 +70,12 @@ public class SongScrapper extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... voids) {
         try {
             Document document = Jsoup.connect(Links.HOMEPAGE_URL + songUrl).get();
-            Element element = document.select(".sourcelist_"+albumId).first();
+            Element element = null;
+            if (FROM_SEARCH == 0) {
+                element = document.select(".sourcelist_" + albumId).first();
+            } else {
+                element = document.select("#parent-row-song" + albumId).first();
+            }
             JSONObject object = new JSONObject(element.text());
             song = generateSong(object);
 
