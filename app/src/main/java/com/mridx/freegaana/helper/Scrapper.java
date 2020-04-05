@@ -25,15 +25,22 @@ public class Scrapper {
     }
 
     OnScrappingComplete onScrappingComplete;
-
-
-
     public interface OnScrappingComplete {
         void setOnScrappingComplete(ArrayList<SongData> songData, ArrayList<TopChart> topCharts, ArrayList<Song> playlistSongs, int dataType);
+        //void setOnScrappingComplete(ArrayList<SongData> songData, ArrayList<SongData> albumData, int dataType);
     }
     public void setOnScrappingComplete(OnScrappingComplete onScrappingComplete) {
         this.onScrappingComplete = onScrappingComplete;
     }
+
+    OnSearchComplete onSearchComplete;
+    public interface OnSearchComplete {
+        void setOnSearchCompleteListener(ArrayList<SongData> songData, ArrayList<SongData> albumData, int dataType);
+    }
+    public void setOnSearchComplete(OnSearchComplete onSearchComplete) {
+        this.onSearchComplete = onSearchComplete;
+    }
+
 
     OnSongScrapingComplete onSongScrapingComplete;
     public interface OnSongScrapingComplete {
@@ -74,7 +81,7 @@ public class Scrapper {
     public void scrapSearch(String query) {
         ScrapSearch scrapSearch = new ScrapSearch(context, query);
         scrapSearch.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        scrapSearch.setOnSearchScrapingComplete(songData -> onScrappingComplete.setOnScrappingComplete(songData, null, null, SEARCH_SONGS));
+        scrapSearch.setOnSearchScrapingComplete((songData, albumData) -> onSearchComplete.setOnSearchCompleteListener(songData, albumData, SEARCH_SONGS));
     }
 
 

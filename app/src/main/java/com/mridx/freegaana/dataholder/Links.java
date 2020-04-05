@@ -10,6 +10,6 @@ public class Links {
 
     private static String MAIN_URL = "https://gaana.com";
     public static final String HOMEPAGE_URL = MAIN_URL;
-    public static final String SEARCH_URL = MAIN_URL + "/search/";
+    public static final String SEARCH_URL = MAIN_URL + "/search/songs/";
 
 }

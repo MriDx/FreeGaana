@@ -98,12 +98,27 @@ public class SongScrapper extends AsyncTask<Void, Void, String> {
 
     private Song generateSong(JSONObject object) throws JSONException {
         JSONObject path = object.getJSONObject("path");
-        String medium = path.getJSONArray("medium").getJSONObject(0).getString("message");
+
+        return new Song(
+                object.getString("title"),
+                new Utility().formatArtist(object.getString("artist")),
+                new Utility().unescapeString(object.getString("albumtitle")),
+                object.getString("artwork"),
+                object.getString("albumartwork"),
+                object.getString("release_date"),
+                path.getJSONArray("high").getJSONObject(0).getString("message"),
+                path.getJSONArray("medium").getJSONObject(0).getString("message"),
+                object.getString("lyrics_url"),
+                object.getString("share_url"),
+                object.getString("album_id")
+        );
+
+        /*String medium = path.getJSONArray("medium").getJSONObject(0).getString("message");
         String high = path.getJSONArray("high").getJSONObject(0).getString("message");
         String lyrics = object.getString("lyrics_url");
         String artists = formatArtist(object.getString("artist"));
         String albumTitle = unescapeCharacters(object.getString("albumtitle"));
-        return new Song(high, medium, lyrics, artists, albumTitle);
+        return new Song(high, medium, lyrics, artists, albumTitle);*/
     }
 
     private String formatArtist(String data) {

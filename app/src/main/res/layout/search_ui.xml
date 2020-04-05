@@ -14,223 +14,243 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        android:id="@+id/songsHolder"
+        />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/trendingView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/trendingHeader"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0">
+    <!-- <androidx.core.widget.NestedScrollView
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/app_bar"
+         app:layout_constraintVertical_bias="0.0"
+         android:visibility="gone"
+         >
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/trendingHeading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Songs"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:textAllCaps="true" />
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/trendingShowAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Show All"
-                        android:textSize="18sp"
-                        android:visibility="visible"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintStart_toEndOf="@+id/trendingHeading"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.5" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+             <androidx.constraintlayout.widget.ConstraintLayout
+                 android:id="@+id/trendingView"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="20dp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintVertical_bias="0">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/trendingHolder"
-                    android:layout_width="0dp"
-                    android:layout_height="210dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/trendingHeader"
-                    app:layout_constraintVertical_bias="0"
-                    android:transitionName="thumbnail"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                 <androidx.constraintlayout.widget.ConstraintLayout
+                     android:id="@+id/trendingHeader"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginBottom="10dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintVertical_bias="0">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/newReleaseView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/trendingView"
-                app:layout_constraintVertical_bias="0">
+                     <androidx.appcompat.widget.AppCompatTextView
+                         android:id="@+id/trendingHeading"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Songs"
+                         android:textSize="20sp"
+                         android:textStyle="bold"
+                         android:textColor="@color/colorPrimaryDark"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintHorizontal_bias="0"
+                         app:layout_constraintStart_toStartOf="parent"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:textAllCaps="true" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/newReleaseHeader"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0">
+                     <androidx.appcompat.widget.AppCompatTextView
+                         android:id="@+id/trendingShowAll"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Show All"
+                         android:textSize="18sp"
+                         android:visibility="visible"
+                         android:textColor="@color/colorAccent"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintHorizontal_bias="1"
+                         app:layout_constraintStart_toEndOf="@+id/trendingHeading"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:layout_constraintVertical_bias="0.5" />
+                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/newReleaseHeading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Albums"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:textAllCaps="true" />
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/trendingHolder"
+                     android:layout_width="0dp"
+                     android:layout_height="210dp"
+                     android:layout_marginTop="10dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/trendingHeader"
+                     app:layout_constraintVertical_bias="0"
+                     android:transitionName="thumbnail"
+                     />
+             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/newReleaseShowAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Show All"
-                        android:textSize="18sp"
-                        android:visibility="visible"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintStart_toEndOf="@+id/newReleaseHeading"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.5" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+             <androidx.constraintlayout.widget.ConstraintLayout
+                 android:id="@+id/newReleaseView"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="20dp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toBottomOf="@+id/trendingView"
+                 app:layout_constraintVertical_bias="0"
+                 android:visibility="gone"
+                 >
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/newReleaseHolder"
-                    android:layout_width="0dp"
-                    android:layout_height="210dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/newReleaseHeader"
-                    app:layout_constraintVertical_bias="0"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                 <androidx.constraintlayout.widget.ConstraintLayout
+                     android:id="@+id/newReleaseHeader"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginBottom="10dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintVertical_bias="0">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/topChartsView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newReleaseView"
-                app:layout_constraintVertical_bias="0">
+                     <androidx.appcompat.widget.AppCompatTextView
+                         android:id="@+id/newReleaseHeading"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Albums"
+                         android:textColor="@color/colorPrimaryDark"
+                         android:textSize="20sp"
+                         android:textStyle="bold"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintHorizontal_bias="0"
+                         app:layout_constraintStart_toStartOf="parent"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:textAllCaps="true" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/topChartsHeader"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0">
+                     <androidx.appcompat.widget.AppCompatTextView
+                         android:id="@+id/newReleaseShowAll"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Show All"
+                         android:textSize="18sp"
+                         android:visibility="visible"
+                         android:textColor="@color/colorAccent"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintHorizontal_bias="1"
+                         app:layout_constraintStart_toEndOf="@+id/newReleaseHeading"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:layout_constraintVertical_bias="0.5" />
+                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/topChartsHeading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Albums"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:textAllCaps="true" />
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/newReleaseHolder"
+                     android:layout_width="0dp"
+                     android:layout_height="210dp"
+                     android:layout_marginTop="10dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/newReleaseHeader"
+                     app:layout_constraintVertical_bias="0"
+                     />
+             </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/topChartsShowAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Show All"
-                        android:textSize="18sp"
-                        android:visibility="visible"
-                        android:textColor="@color/colorAccent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintStart_toEndOf="@+id/topChartsHeading"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.5" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+             <androidx.constraintlayout.widget.ConstraintLayout
+                 android:id="@+id/topChartsView"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="20dp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toBottomOf="@+id/newReleaseView"
+                 app:layout_constraintVertical_bias="0"
+                 android:visibility="gone"
+                 >
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/topChartsHolder"
-                    android:layout_width="0dp"
-                    android:layout_height="230dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/topChartsHeader"
-                    app:layout_constraintVertical_bias="0"
-                    android:transitionName="playlistAlbum"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                 <androidx.constraintlayout.widget.ConstraintLayout
+                     android:id="@+id/topChartsHeader"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="10dp"
+                     android:layout_marginBottom="10dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintVertical_bias="0">
+
+                     <androidx.appcompat.widget.AppCompatTextView
+                         android:id="@+id/topChartsHeading"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Albums"
+                         android:textColor="@color/colorPrimaryDark"
+                         android:textSize="20sp"
+                         android:textStyle="bold"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintHorizontal_bias="0"
+                         app:layout_constraintStart_toStartOf="parent"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:textAllCaps="true" />
+
+                     <androidx.appcompat.widget.AppCompatTextView
+                         android:id="@+id/topChartsShowAll"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Show All"
+                         android:textSize="18sp"
+                         android:visibility="visible"
+                         android:textColor="@color/colorAccent"
+                         app:layout_constraintBottom_toBottomOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintHorizontal_bias="1"
+                         app:layout_constraintStart_toEndOf="@+id/topChartsHeading"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:layout_constraintVertical_bias="0.5" />
+                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/topChartsHolder"
+                     android:layout_width="0dp"
+                     android:layout_height="230dp"
+                     android:layout_marginTop="10dp"
+                     app:layout_constraintBottom_toBottomOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/topChartsHeader"
+                     app:layout_constraintVertical_bias="0"
+                     android:transitionName="playlistAlbum"
+                     />
+             </androidx.constraintlayout.widget.ConstraintLayout>
+         </androidx.constraintlayout.widget.ConstraintLayout>
+     </androidx.core.widget.NestedScrollView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,6 +75,11 @@ public class SongHelper {
         if (songUI.artistsNameView.getText().toString().length() == 0 || songUI.artistsNameView.getText().toString().toLowerCase().equalsIgnoreCase("null")) {
             songUI.artistsNameView.setText(song.getArtists());
         }
+        if (songUI.layout_code == FROM_SEARCH) {
+            Picasso.get()
+                    .load(getHDThumbnail(song.getArtwork()))
+                    .into(songUI.thumbnailView);
+        }
     }
 
     private void showDownload() {
@@ -87,7 +92,7 @@ public class SongHelper {
         songUI.albumNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getAlbumName() : songUI.song.getAlbumTitle());
         songUI.artistsNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getArtistDetails() : songUI.song.getArtists());
         Picasso.get()
-                .load(getHDThumbnail(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
+                .load( songUI.layout_code == 2  ? songUI.songData.getThumbnail() :getHDThumbnail(songUI.layout_code == 0 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
                 .into(songUI.thumbnailView);
         songUI.songDownload.setOnClickListener(v -> handleDownloadClick());
     }
