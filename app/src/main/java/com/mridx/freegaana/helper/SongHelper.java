@@ -129,7 +129,8 @@ public class SongHelper {
             downloader.startDownload(context, media, songUI.songData.getSongName());*/
         }
         downloader = new GaanaDownloader();
-        downloader.startDownload(context, media, songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getSongName() : songUI.song.getSongName());
+        //downloader.startDownload(context, media, songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getSongName() : songUI.song.getSongName());
+        downloader.startDownload(context, media, song);
 
         downloader.setOnGetMaxDuration(duration -> {
             downloadIndicator.setMax(Integer.parseInt(String.valueOf(duration).split("\\.")[0]));

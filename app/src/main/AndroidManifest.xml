@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <application
         android:name=".config.AppConfig"
         android:allowBackup="true"
@@ -24,6 +25,8 @@
         <activity android:name=".activity.SongUI" />
         <activity android:name=".activity.PlaylistUI" />
         <activity android:name=".activity.SearchUI" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 
 </manifest>
