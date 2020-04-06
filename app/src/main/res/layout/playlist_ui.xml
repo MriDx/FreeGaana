@@ -34,7 +34,6 @@
                 android:layout_height="300dp"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5"
-                app:srcCompat="@drawable/song"
                 android:scaleType="fitXY"
                 android:alpha="0.8"
                 android:id="@+id/albumImageView"

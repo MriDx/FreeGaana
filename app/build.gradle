@@ -3,6 +3,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/mridx/keystores/universal/universal.keystore')
+            storePassword 'mmxunite2'
+            keyAlias = 'release'
+            keyPassword 'mmxunite2'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
@@ -11,15 +19,22 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "0.01beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
+        multiDexEnabled = true
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -44,10 +59,11 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.writingminds:FFmpegAndroid:0.3.2'
+    //implementation 'com.writingminds:FFmpegAndroid:0.3.2'
     implementation files('libs/jaudiotagger-2.2.3.jar')
     implementation files('libs/httpclient-4.5.8.jar')
 
     //implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta03'
+    implementation project(path: ':FFmpegAndroid')
 }
