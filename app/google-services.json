@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1037889284866",
+    "firebase_url": "https://free-gaana-bb7d7.firebaseio.com",
+    "project_id": "free-gaana-bb7d7",
+    "storage_bucket": "free-gaana-bb7d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037889284866:android:a689f2f7988ccf0482b01b",
+        "android_client_info": {
+          "package_name": "com.mridx.freegaana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037889284866-mkvhiu55mmjt32fn97hkb2qb0gb0aiui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mridx.freegaana",
+            "certificate_hash": "088e4d819593cc5029fe575f19977a2dc0f8259f"
+          }
+        },
+        {
+          "client_id": "1037889284866-9ll70e83bd1g88su109jc641t5j8g48a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhn8Wv2rLX5S_cqTZ_mBgjmf9-cl53GCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037889284866-9ll70e83bd1g88su109jc641t5j8g48a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
