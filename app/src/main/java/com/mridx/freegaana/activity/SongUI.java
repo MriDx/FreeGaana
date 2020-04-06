@@ -4,8 +4,10 @@
 
 package com.mridx.freegaana.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -17,6 +19,9 @@ import com.mridx.freegaana.R;
 import com.mridx.freegaana.dataholder.Song;
 import com.mridx.freegaana.dataholder.SongData;
 import com.mridx.freegaana.helper.SongHelper;
+
+import static com.mridx.freegaana.helper.PermissionHelper.STORAGE_PERMISSION_REQUEST;
+import static com.mridx.freegaana.helper.PermissionHelper.STORAGE_PERMISSION_SETTINGS;
 
 public class SongUI extends AppCompatActivity {
 
@@ -59,5 +64,21 @@ public class SongUI extends AppCompatActivity {
         songDownload = findViewById(R.id.songDownload);
         floatingBtnMask = findViewById(R.id.floatingBtnMask);
         parentView = findViewById(R.id.parentView);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION_REQUEST) {
+            helper.handleDownloadClick();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == STORAGE_PERMISSION_SETTINGS) {
+            helper.handleDownloadClick();
+        }
     }
 }

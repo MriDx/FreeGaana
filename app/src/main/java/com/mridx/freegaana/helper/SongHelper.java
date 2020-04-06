@@ -92,22 +92,26 @@ public class SongHelper {
         songUI.albumNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getAlbumName() : songUI.song.getAlbumTitle());
         songUI.artistsNameView.setText(songUI.layout_code == 0 || songUI.layout_code == 2 ? songUI.songData.getArtistDetails() : songUI.song.getArtists());
         Picasso.get()
-                .load( songUI.layout_code == 2  ? songUI.songData.getThumbnail() :getHDThumbnail(songUI.layout_code == 0 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
+                .load(songUI.layout_code == 2 ? songUI.songData.getThumbnail() : getHDThumbnail(songUI.layout_code == 0 ? songUI.songData.getThumbnail() : songUI.song.getAlbumArtwork()))
                 .into(songUI.thumbnailView);
         songUI.songDownload.setOnClickListener(v -> handleDownloadClick());
     }
 
-    private void handleDownloadClick() {
-        BottomSheetDialog bottomSheetDialog = createBtmSheet();
-        bottomSheetDialog.show();
-        bottomSheetDialog.findViewById(R.id.highDownload).setOnClickListener(v -> {
-            startDownload(HIGH);
-            bottomSheetDialog.dismiss();
-        });
-        bottomSheetDialog.findViewById(R.id.mediumDownload).setOnClickListener(v -> {
-            startDownload(MEDIUM);
-            bottomSheetDialog.dismiss();
-        });
+    public void handleDownloadClick() {
+        if (new PermissionHelper().checkStoragePermission(context)) {
+            BottomSheetDialog bottomSheetDialog = createBtmSheet();
+            bottomSheetDialog.show();
+            bottomSheetDialog.findViewById(R.id.highDownload).setOnClickListener(v -> {
+                startDownload(HIGH);
+                bottomSheetDialog.dismiss();
+            });
+            bottomSheetDialog.findViewById(R.id.mediumDownload).setOnClickListener(v -> {
+                startDownload(MEDIUM);
+                bottomSheetDialog.dismiss();
+            });
+            return;
+        }
+        new PermissionHelper().askStoragePermission(context);
     }
 
     private void startDownload(int type) {
